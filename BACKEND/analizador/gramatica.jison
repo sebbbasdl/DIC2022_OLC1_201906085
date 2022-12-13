@@ -39,13 +39,16 @@
 /lex
 
 %{
+	const Instruccion = require('./Instruccion.js');
 	const Reportes = require('./reportes.js');
 	const Declaracion = require('./Declaracion.js');
 	const SymbolTable = require('./tabla_simbolos.js');
 	const Type = require('./tipo.js');
 	const Print = require('./Imprimir.js');
+
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
+	
 	tabla_simbolo.reportes = reportes;
 	var trad="";
 
@@ -63,13 +66,18 @@
 
 ini
 	: instrucciones EOF {
-		console.log("-------trad-----------")
-		console.log(trad)
 		  for(var i = 0; i< $1.length; i++){
             if($1[i])
+				console.log("hola")
 				console.log($1[i])
-                $1[i].operar(tabla_simbolo, reportes)
+				var instru= new Instruccion($1[i]);
+				instru.prueba($1[i])
+		        $1[i].operar(tabla_simbolo, reportes)
         }
+		//console.log("------Tabla de simbolos------")
+		//console.log(tabla_simbolo)
+		
+		
 
 		return reportes;
 	}
@@ -92,13 +100,13 @@ instruccion
 ;
 
 imprimir 
-	:T_CONSOLE T_PUNTO T_WRITE PARIZQ instrucciones PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"ENTERO");trad+=$$.trad();}
+	:T_CONSOLE T_PUNTO T_WRITE PARIZQ instrucciones PARDER { console.log("Paso a aqui PRINT", $1);var impri = new Print($5,this._$.first_line,this._$.first_column,"ENTERO","imprimir","imprimir("+$5+")"); $$ = new Print($5,this._$.first_line,this._$.first_column,"ENTERO","imprimir","imprimir("+impri.trad()+")"); $$.trad();}
 
 ;
 
 
 declaracion
-     : type IDENTIFICADOR T_IGUAL expresion { console.log("Paso a aqui", $1); $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column);trad+= $2+"="+$4}
+     : type IDENTIFICADOR T_IGUAL expresion { console.log("Paso a aqui", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4);trad+= $2+"="+$4}
 ;
 
 expresion

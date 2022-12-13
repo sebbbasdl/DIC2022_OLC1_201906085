@@ -85,13 +85,18 @@ var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
 
-		console.log("-------trad-----------")
-		console.log(trad)
 		  for(var i = 0; i< $$[$0-1].length; i++){
             if($$[$0-1][i])
+				console.log("hola")
 				console.log($$[$0-1][i])
-                $$[$0-1][i].operar(tabla_simbolo, reportes)
+				var instru= new Instruccion($$[$0-1][i]);
+				instru.prueba($$[$0-1][i])
+		        $$[$0-1][i].operar(tabla_simbolo, reportes)
         }
+		//console.log("------Tabla de simbolos------")
+		//console.log(tabla_simbolo)
+		
+		
 
 		return reportes;
 	
@@ -111,10 +116,10 @@ case 5:
   console.log("Paso a aqui 2", $$[$0-1]); if($$[$0-1] != null){this.$ = $$[$0-1]}
 break;
 case 7:
- console.log("Paso a aqui PRINT", $$[$0-5]); this.$ = new Print($$[$0-1],this._$.first_line,this._$.first_column,"ENTERO");trad+=this.$.trad();
+ console.log("Paso a aqui PRINT", $$[$0-5]);var impri = new Print($$[$0-1],this._$.first_line,this._$.first_column,"ENTERO","imprimir","imprimir("+$$[$0-1]+")"); this.$ = new Print($$[$0-1],this._$.first_line,this._$.first_column,"ENTERO","imprimir","imprimir("+impri.trad()+")"); this.$.trad();
 break;
 case 8:
- console.log("Paso a aqui", $$[$0-3]); this.$ = new Declaracion($$[$0-2]+"="+$$[$0],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column);trad+= $$[$0-2]+"="+$$[$0]
+ console.log("Paso a aqui", $$[$0-3]);  this.$ = new Declaracion($$[$0-2]+"="+$$[$0],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]);trad+= $$[$0-2]+"="+$$[$0]
 break;
 case 9:
  this.$ = $$[$0] *-1; 
@@ -392,13 +397,16 @@ _handle_error:
     return true;
 }};
 
+	const Instruccion = require('./Instruccion.js');
 	const Reportes = require('./reportes.js');
 	const Declaracion = require('./Declaracion.js');
 	const SymbolTable = require('./tabla_simbolos.js');
 	const Type = require('./tipo.js');
 	const Print = require('./Imprimir.js');
+
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
+	
 	tabla_simbolo.reportes = reportes;
 	var trad="";
 
