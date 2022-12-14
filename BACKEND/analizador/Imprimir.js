@@ -4,13 +4,14 @@ const Type = require('./tipo');
 
 
 class Imprimir{
-    constructor(identificador, fila, conlumna, tipo_dato,name,tradu){
+    constructor(identificador, fila, conlumna, tipo_dato,name,tradu,iden){
         this.identificador= identificador
         this.tipo_dato=tipo_dato
         this.fila= fila
         this.conlumna=conlumna
         this.name=name
         this.tradu=tradu
+        this.iden=iden
     }
 
     operar(tabla_simbolos,reportes){

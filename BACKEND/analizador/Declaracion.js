@@ -2,7 +2,7 @@ const Symbol = require('./simbolo');
 const Type = require('./tipo');
 
 class Declaration {
-    constructor(_identificador,_tipo_dato, _token,_lexema,_valor , _fila, _columna,name,tradu) {
+    constructor(_identificador,_tipo_dato, _token,_lexema,_valor , _fila, _columna,name,tradu,iden) {
         this.identificador = _identificador; //NOMBRE DEL ARREGLO ,VARIBALE , METODO
         this.tipo_dato = _tipo_dato; // INTEGER, DOUBLE, DECIMAL, STRING, OBJETO, FUNCION ...
         this.token = _token; //ARREGLO, LISTA, VARIABLE ... 
@@ -12,6 +12,7 @@ class Declaration {
         this.columna = _columna
         this.name=name
         this.tradu=tradu
+        this.iden=iden
     }
 
     /**

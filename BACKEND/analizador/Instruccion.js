@@ -87,13 +87,19 @@ class Instruccion{
               // Si el elemento no es un objeto, simplemente imprime su valor
               //global.traduccion+=element
               //console.log(element);
-              
+              var idenaux=0;
               if(key=="tradu"){
                 console.log(key+':'+obj[key])
-                global.traduccion=obj[key]
+                
+                global.traduccion+=obj[key]
               }else if(key=="name"){
                 console.log(key+':'+obj[key])
-
+                if(obj["name"]=="Condicion If"){
+                  idenaux+=1
+                  console.log("------------------"+idenaux)
+                }
+              }else if(key=="iden"){
+                console.log(key+':'+obj[key])
               }
             }
           }
@@ -101,6 +107,16 @@ class Instruccion{
         //console.log("estoy4")
         //console.log(global.traduccion)
       }
+
+      generarIden(identa){
+        var ident=""
+        for (let i = 0; i < identa; i++) {
+            ident+="\t";
+
+            
+        }
+        return ident
+    }
 
     
 }

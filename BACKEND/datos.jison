@@ -103,7 +103,7 @@ ini
 
 instrucciones
 	: instrucciones  instruccion  {console.log("Estoy en instrucciones--- ");$$ = $1; $$.push($2);}
-	| instruccion  {identacion.menosIden();console.log("Estoy en instruccion");$$ = []; $$.push($1)}
+	| instruccion  {console.log("Estoy en instruccion");$$ = []; $$.push($1)}
 	| error instruccion { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
 			  reportes.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
 			}

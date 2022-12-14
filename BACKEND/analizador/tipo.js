@@ -4,6 +4,7 @@ const tipo = {
     ENTERO: 'ENTERO',
     STRING: 'STRING',
     BOOLEANO: 'BOOLEANO',
+    CHAR: 'CHAR',
     VARIABLE: 'VARIABLE',
     DOUBLE: 'DOUBLE',
 }
