@@ -10,14 +10,19 @@
 %%
 "Evaluar"			return 'REVALUAR';
 "Console"			return 'T_CONSOLE';
-"Write"				return 'T_WRITE'
+"while"				return 'T_WHILE'
+"for"				return 'T_FOR';
+"Write"				return 'T_WRITE';
 "int"           	return 'T_INT';
 "double"           	return 'T_DOUBLE';
 "char"           	return 'T_CHAR';
 "bool"           	return 'T_BOOL';
 "string"           	return 'T_STRING';
 "if"				return 'T_IF';
-"."					return 'T_PUNTO'
+"do"				return 'T_DO';
+"void"				return 'T_VOID'
+"."					return 'T_PUNTO';
+","					return 'T_COMA';
 ";"                 return 'PTCOMA';
 "("                 return 'PARIZQ';
 ")"                 return 'PARDER';
@@ -31,6 +36,12 @@
 "*"                 return 'POR';
 "/"                 return 'DIVIDIDO';
 "="                 return 'T_IGUAL';
+"<"					return 'T_MENORQ';
+">"					return 'T_MAYORQ';
+"!"					return 'T_DIFERENTE';
+
+"&&"				return 'T_AND';
+"||"				return 'T_OR';
 
 "true"				return 'T_TRUE'
 "false"				return 'T_FALSE'
@@ -60,10 +71,13 @@
 	const Print = require('./Imprimir.js');
 	const If = require('./If.js');
 	const Iden=require('./Identacion.js')
+	const Param= require('./Parametro.js')
+	const Logi = require('./Logicos.js')
 	var cont=0;
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
 	var identacion=new Iden(cont);
+	
 	
 	tabla_simbolo.reportes = reportes;
 	var trad="";
@@ -113,15 +127,30 @@ instruccion
 	: declaracion PTCOMA  { /*identacion.masIden();*/  console.log("Paso a aqui 1", $1); if($1 != null){$$ = $1}}
 	| imprimir PTCOMA { /*identacion.masIden();*/  console.log("Paso a aqui 2", $1); if($1 != null){$$ = $1}}
 	| if {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| for 
+	| while
+	| do_while
+	| void
+	| funciones
 	// | REVALUAR CORIZQ expresion CORDER PTCOMA {
 	// 	console.log('El valor de la expresión es: ' + $3);
 	// }
 ;
 
+concatenars
+	: concatenars concatenar
+	| concatenar
+
+;
+
+concatenar
+	: MAS IDENTIFICADOR
+	| IDENTIFICADOR
+;
 imprimir 
-	:T_CONSOLE T_PUNTO T_WRITE PARIZQ expresion PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"EXPRESION","imprimir","print("+$5+")\n");}
-	|T_CONSOLE T_PUNTO T_WRITE PARIZQ IDENTIFICADOR PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print("+$5+")\n",identacion.getIden()/*+1*/);}
-	|T_CONSOLE T_PUNTO T_WRITE PARIZQ CADENA PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"CADENA","imprimir","print(\""+$5+"\")\n");}
+	:T_CONSOLE T_PUNTO T_WRITE PARIZQ expresion concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"EXPRESION","imprimir","print("+$5+")\n");}
+	|T_CONSOLE T_PUNTO T_WRITE PARIZQ concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print("+$5+")\n",identacion.getIden()/*+1*/);}
+	|T_CONSOLE T_PUNTO T_WRITE PARIZQ CADENA concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"CADENA","imprimir","print(\""+$5+"\")\n");}
 ;
 
 
@@ -132,6 +161,7 @@ declaracion
 	 | T_STRING IDENTIFICADOR T_IGUAL  CADENA{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"=\""+$4+"\"\n");trad+= $2+"="+$4}
 	 | T_CHAR IDENTIFICADOR T_IGUAL  CHAR{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
 	 | T_DOUBLE IDENTIFICADOR T_IGUAL  DECIMAL{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
+	 | T_INT IDENTIFICADOR  {console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION100' ,this._$.first_line,this._$.first_column,"declaracion",$2,identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2}
 ;
 
 expresion
@@ -145,8 +175,80 @@ expresion
 	| PARIZQ expresion PARDER       { $$ = $2; }
 ;
 
+logicos
+	: logicos logico {$$ = $1; $$.push($2);}
+	| logico {$$ = []; $$.push($1);}
+;
+
+logico 
+	: T_OR relacionales{$$= new Logi(" or "+$2["tradu"],"param");}
+	| T_AND relacionales {$$= new Logi(" and "+$2["tradu"],"param");}
+	| relacionales {$$= new Logi($1["tradu"],"param");}
+;
+
+parametros 
+	: parametros parametro{$$ = $1; $$.push($2);}
+	| parametro {$$ = []; $$.push($1);}
+;
+
+parametro
+	:declaracion { $$ = new Param($1["tradu"],"param");}
+	| T_COMA declaracion { $$ = new Param(","+$2["tradu"],"param"); }
+;
+
+relacionales
+	: IDENTIFICADOR T_MAYORQ expresion 		{$$= new Logi($1 +">"+$3,"param");}		/* > */
+	| IDENTIFICADOR T_MAYORQ IDENTIFICADOR  {$$= new Logi($1 +">"+$3,"param");}
+	| IDENTIFICADOR T_MENORQ expresion 		{$$= new Logi($1 +"<"+$3,"param");}		/* < */
+	| IDENTIFICADOR T_MENORQ IDENTIFICADOR  {$$= new Logi($1 +"<"+$3,"param");}
+	| IDENTIFICADOR T_MAYORQ T_IGUAL expresion 	{$$= new Logi($1 +">="+$4,"param");}	    /* >= */
+	| IDENTIFICADOR T_MAYORQ T_IGUAL IDENTIFICADOR {$$= new Logi($1 +">="+$4,"param");}
+	| IDENTIFICADOR T_MENORQ T_IGUAL expresion	{$$= new Logi($1 +"<="+$4,"param");}	/* <= */
+	| IDENTIFICADOR T_MENORQ T_IGUAL IDENTIFICADOR {$$= new Logi($1 +"<="+$4,"param");}
+	| IDENTIFICADOR T_IGUAL T_IGUAL expresion		/* == */
+	| IDENTIFICADOR T_IGUAL T_IGUAL IDENTIFICADOR
+	| IDENTIFICADOR T_IGUAL T_IGUAL T_TRUE
+	| IDENTIFICADOR T_IGUAL T_IGUAL T_FALSE
+	| IDENTIFICADOR T_IGUAL T_IGUAL CADENA
+	| IDENTIFICADOR T_IGUAL T_IGUAL CHAR
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL expresion		/* != */
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL IDENTIFICADOR
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL T_TRUE
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL T_FALSE
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL CADENA
+	| IDENTIFICADOR T_DIFERENTE T_IGUAL CHAR
+	
+;
+
+
+
 if
-	: T_IF PARIZQ IDENTIFICADOR PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por If");var auxif= new If($3,"Condicion If", $6,identacion.getIden()); $$= new If($3,"Condicion If", "if "+$3+" :\n"+auxif.trad()+"\n",identacion.getIden());}
+	: T_IF PARIZQ logicos PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por If");var auxif= new If($3,"Condicion If", $6,identacion.getIden()); $$= new If($3,"Condicion If", "if "+auxif.trad2()+" :\n"+auxif.trad()+"\n",identacion.getIden());}
+;
+
+for
+	: T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MAS MAS PARDER LLAVEA instrucciones LLAVEC
+	| T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MENOS MENOS PARDER LLAVEA instrucciones LLAVEC
+;
+
+while
+	: T_WHILE PARIZQ logicos PARDER LLAVEA instrucciones LLAVEC
+;
+
+do_while
+	:  T_DO LLAVEA instrucciones LLAVEC  T_WHILE PARIZQ logicos PARDER PTCOMA
+;
+
+void 
+	: T_VOID IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+;
+
+funciones
+	: T_INT IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	| T_STRING IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	| T_CHAR IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	| T_BOOL IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	| T_DOUBLE IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
 ;
 
 type

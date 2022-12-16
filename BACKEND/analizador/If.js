@@ -75,6 +75,67 @@ class If{
         
 
     }
+    trad2(){
+        /*var aux= this.identificador
+        var cont=0;
+        for (var valor of aux) {
+            cont+=1
+            console.log(cont)
+            console.log(valor["identificador"]);
+        }
+        
+        var val= "imprimir( "+ aux+")"
+        return val*/
+        var aux= this.condicion
+        var aux1=this.iden
+        
+        console.log("--------------------------------------TRAAAAD2")
+        console.log(cont);
+        console.log(aux)
+        var datos=""
+        //console.log(aux.tradu)
+       
+        var cont=0;
+        
+        
+        console.log("--------IDENTACION---------")
+        console.log(aux1)
+        /*for (var valor2 of aux2) {
+            
+            //console.log("--------IDENTACION---------")
+            //console.log(valor["iden"])
+            
+            maxiden=valor2["iden"]
+            console.log("-----MAXIDEN------"+maxiden)    
+            
+        }*/
+        
+        
+        for (var valor of aux) {
+            
+            
+            //console.log(valor["iden"])
+            
+            
+            
+            
+            //console.log(valor["name"]);
+            if(valor["name"]=="Condicion If"){
+                cont+=1
+                //auxiden+="\t"
+            }else{
+                
+            }
+            console.log("---------RESTAAAAA----")
+            console.log(valor["iden"])
+            console.log(cont)
+            datos+=valor["tradu"]
+        }
+        //console.log("DATOSSSS"+datos)
+        return datos
+        
+
+    }
     generarIden(identa){
         var ident=""
         for (let i = 0; i < identa; i++) {

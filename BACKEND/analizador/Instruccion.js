@@ -90,8 +90,13 @@ class Instruccion{
               var idenaux=0;
               if(key=="tradu"){
                 console.log(key+':'+obj[key])
+                if(obj["name"]=="param"){
+                  console.log("--------entreeeeeeeeee")
+                }else{
+                  global.traduccion+=obj[key]
+                }
                 
-                global.traduccion+=obj[key]
+                
               }else if(key=="name"){
                 console.log(key+':'+obj[key])
                 if(obj["name"]=="Condicion If"){
