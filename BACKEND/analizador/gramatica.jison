@@ -73,6 +73,10 @@
 	const Iden=require('./Identacion.js')
 	const Param= require('./Parametro.js')
 	const Logi = require('./Logicos.js')
+	const Conca = require('./Concatenar.js')
+	const For = require('./For.js')
+	const While= require('./While.js')
+	const DoWhile= require('./DoWhile.js')
 	var cont=0;
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
@@ -127,30 +131,33 @@ instruccion
 	: declaracion PTCOMA  { /*identacion.masIden();*/  console.log("Paso a aqui 1", $1); if($1 != null){$$ = $1}}
 	| imprimir PTCOMA { /*identacion.masIden();*/  console.log("Paso a aqui 2", $1); if($1 != null){$$ = $1}}
 	| if {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
-	| for 
-	| while
-	| do_while
-	| void
-	| funciones
+	| for  {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| while {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| do_while {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| void {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| funciones {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
 	// | REVALUAR CORIZQ expresion CORDER PTCOMA {
 	// 	console.log('El valor de la expresión es: ' + $3);
 	// }
 ;
 
 concatenars
-	: concatenars concatenar
-	| concatenar
+	: concatenars concatenar {$$ = $1; $$.push($2);}
+	| concatenar{$$ = []; $$.push($1);}
 
 ;
 
 concatenar
-	: MAS IDENTIFICADOR
-	| IDENTIFICADOR
+	: MAS IDENTIFICADOR {$$= new Conca(" , "+$2,"param");}
+	| MAS CADENA {$$= new Conca(" , \""+$2+"\"","param");}
+	| IDENTIFICADOR {$$= new Conca($1,"param");}
+	| CADENA {$$= new Conca("\""+$1+"\"","param");}
 ;
+
 imprimir 
-	:T_CONSOLE T_PUNTO T_WRITE PARIZQ expresion concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"EXPRESION","imprimir","print("+$5+")\n");}
-	|T_CONSOLE T_PUNTO T_WRITE PARIZQ concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print("+$5+")\n",identacion.getIden()/*+1*/);}
-	|T_CONSOLE T_PUNTO T_WRITE PARIZQ CADENA concatenars PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"CADENA","imprimir","print(\""+$5+"\")\n");}
+	:T_CONSOLE T_PUNTO T_WRITE PARIZQ expresion PARDER { console.log("Paso a aqui PRINT", $1); $$ = new Print($5,this._$.first_line,this._$.first_column,"EXPRESION","imprimir","print("+$5+")\n");}
+	|T_CONSOLE T_PUNTO T_WRITE PARIZQ concatenars PARDER { console.log("Paso a aqui PRINT", $1); var auxprint= new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",$5,identacion.getIden()/*+1*/);$$ = new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print("+auxprint.trad2()+")\n",identacion.getIden()/*+1*/);}
+	|T_CONSOLE T_PUNTO T_WRITE PARIZQ expresion concatenars PARDER { console.log("Paso a aqui PRINT", $1); var auxprint= new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",$6,identacion.getIden()/*+1*/);$$ = new Print($5,this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print(" +$5+auxprint.trad2()+")\n",identacion.getIden()/*+1*/);}
 ;
 
 
@@ -227,16 +234,16 @@ if
 ;
 
 for
-	: T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MAS MAS PARDER LLAVEA instrucciones LLAVEC
-	| T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MENOS MENOS PARDER LLAVEA instrucciones LLAVEC
+	: T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MAS MAS PARDER LLAVEA instrucciones LLAVEC{identacion.masIden();console.log("Paso por for");var auxfor= new For($3,$5, $7+$8+$9,"Ciclo For",$12,identacion.getIden()); $$= new For(auxfor.obtenerDatoDecla2(),auxfor.obtenerCondicion(), $7+$8+$9,"Ciclo For","for "+auxfor.obtenerDatoDecla2()+" in range("+auxfor.obtenerDatoDecla()+","+auxfor.obtenerCondicion()+"):\n"+auxfor.trad(),identacion.getIden());}
+	| T_FOR PARIZQ declaracion PTCOMA relacionales PTCOMA IDENTIFICADOR MENOS MENOS PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por for");var auxfor= new For($3,$5, $7+$8+$9,"Ciclo For",$12,identacion.getIden()); $$= new For(auxfor.obtenerDatoDecla2(),auxfor.obtenerCondicion(), $7+$8+$9,"Ciclo For","for "+auxfor.obtenerDatoDecla2()+" in range("+auxfor.obtenerDatoDecla()+","+auxfor.obtenerCondicion()+"):\n"+auxfor.trad(),identacion.getIden());}
 ;
 
 while
-	: T_WHILE PARIZQ logicos PARDER LLAVEA instrucciones LLAVEC
+	: T_WHILE PARIZQ logicos PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por While");var auxwhile= new While($3,"Ciclo While", $6,identacion.getIden()); $$= new While($3,"Ciclo While", "while "+auxwhile.trad2()+" :\n"+auxwhile.trad()+"\n",identacion.getIden());}
 ;
 
 do_while
-	:  T_DO LLAVEA instrucciones LLAVEC  T_WHILE PARIZQ logicos PARDER PTCOMA
+	:  T_DO LLAVEA instrucciones LLAVEC  T_WHILE PARIZQ logicos PARDER PTCOMA {identacion.masIden();console.log("Paso por While");var auxdowhile= new DoWhile($7,"Ciclo Do While", $3,identacion.getIden()); $$= new DoWhile($3,"Ciclo Do While", "while True :\n"+auxdowhile.trad()+"\n"+auxdowhile.generarIden(identacion.getIden())+"if "+auxdowhile.trad2()+":\n"+auxdowhile.generarIden(identacion.getIden()+1)+"break\n",identacion.getIden());}
 ;
 
 void 

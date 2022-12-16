@@ -1,23 +1,10 @@
-const { json } = require('body-parser');
 const Symbol = require('./simbolo');
-const Type = require('./tipo');
-
-
-class Imprimir{
-    constructor(identificador, fila, conlumna, tipo_dato,name,tradu,iden){
-        this.identificador= identificador
-        this.tipo_dato=tipo_dato
-        this.fila= fila
-        this.conlumna=conlumna
+class DoWhile{
+    constructor(condicion,  name, tradu,iden){
+        this.condicion=condicion
         this.name=name
         this.tradu=tradu
         this.iden=iden
-    }
-
-    operar(tabla_simbolos,reportes){
-        tabla_simbolos.addSymbolDirect(new Symbol(this.identificador, this.tipo_dato,this.fila,this.columna));
-        reportes.putSimbolo(new Symbol(this.identificador, this.tipo_dato,this.fila,this.columna));
-        return true;
     }
     trad(){
         /*var aux= this.identificador
@@ -30,23 +17,62 @@ class Imprimir{
         
         var val= "imprimir( "+ aux+")"
         return val*/
-        var aux= this.identificador
-        console.log("--------------------------------------")
+        var aux= this.tradu
+        var aux1=this.iden
+        var aux2=this.decla
+
+
+        
+        console.log("--------------------------------------if")
+        console.log(aux2)
+        console.log(cont);
+        console.log(aux)
         var datos=""
         //console.log(aux.tradu)
+       
         var cont=0;
-        for (var valor of aux) {
-            datos+=valor["tradu"]
-            cont+=1
-            console.log(cont)
-            console.log(valor["tradu"]);
+        
+        
+        console.log("--------IDENTACION---------")
+        console.log(aux1)
+        /*for (var valor2 of aux2) {
             
+            //console.log("--------IDENTACION---------")
+            //console.log(valor["iden"])
+            
+            maxiden=valor2["iden"]
+            console.log("-----MAXIDEN------"+maxiden)    
+            
+        }*/
+        
+        
+        for (var valor of aux) {
+            
+            
+            //console.log(valor["iden"])
+            
+            
+            
+            
+            //console.log(valor["name"]);
+            if(valor["name"]=="Condicion If"){
+                cont+=1
+                //auxiden+="\t"
+            }else{
+                
+            }
+            console.log("---------RESTAAAAA----")
+            console.log(valor["iden"])
+            console.log(cont)
+            datos+=this.generarIden(aux1)+valor["tradu"]
         }
-        console.log(datos)
+        //console.log("DATOSSSS"+datos)
+        
         return datos
         
 
     }
+
     trad2(){
         /*var aux= this.identificador
         var cont=0;
@@ -58,7 +84,7 @@ class Imprimir{
         
         var val= "imprimir( "+ aux+")"
         return val*/
-        var aux= this.tradu
+        var aux= this.condicion
         var aux1=this.iden
         
         console.log("--------------------------------------TRAAAAD2")
@@ -108,5 +134,21 @@ class Imprimir{
         
 
     }
+
+    generarIden(identa){
+        var ident=""
+        for (let i = 0; i < identa; i++) {
+            ident+="\t";
+
+            
+        }
+        return ident
+    }
+
+    operar(tabla_simbolos,reportes){
+        tabla_simbolos.addSymbolDirect(new Symbol(this.decla, this.relacional,this.aum_dec,this.tradu));
+        reportes.putSimbolo(new Symbol(this.decla, this.relacional,this.aum_dec,this.tradu));
+        return true;
+    }
 }
-module.exports = Imprimir;
+module.exports =DoWhile;
