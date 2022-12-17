@@ -25,6 +25,15 @@ class Reportes {
         this.errores_sintacticos.push(body)
     }
 
+    getErrores_lexicos(){
+        return this.errores_lexicos;
+    }
+
+    putError_lexicos(body){
+        body.tipo= tipo.LEXICO;
+        this.errores_lexicos.push(body)
+    }
+
 
     getSimbolos(){
         return this.reporte_simbolos;

@@ -21,7 +21,7 @@ router.post("/Analizador", async (req, res) => {
     }else{
         console.log("Analisis exitoso");
     }
-    res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: resultado.getSimbolos(), traduccion: global.traduccion});
+    res.send({errores_sintacticos:resultado.getErrores_sintacticos(),errores_lexicos:resultado.getErrores_lexicos(), tabla_simbolos: resultado.getSimbolos(), traduccion: global.traduccion});
     // console.log(id_user.id_usuario_logueado)
     console.log(global.traduccion)
     global.traduccion=""

@@ -62,7 +62,8 @@
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
+						reportes.putError_lexicos({lexema:yytext, fila: yylloc.first_line, columna:yylloc.first_column }); }
 /lex
 
 %{
@@ -107,7 +108,7 @@
 ini
 	: instrucciones EOF {
 			
-		  for(var i = 0; i< $1.length; i++){
+		 for(var i = 0; i< $1.length; i++){
             if($1[i])
 				console.log("hola")
 				console.log($1[i])
@@ -127,9 +128,7 @@ ini
 instrucciones
 	: instrucciones  instruccion  {console.log("Estoy en instrucciones--- ");$$ = $1; $$.push($2);}
 	| instruccion  {identacion.menosIden();console.log("Estoy en instruccion");$$ = []; $$.push($1)}
-	| error instruccion { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
-			  reportes.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
-			}
+	
 ;
 
 instruccion
@@ -141,6 +140,9 @@ instruccion
 	| do_while {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
 	| void {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
 	| funciones {  /*identacion.menosIden();*/ console.log("Paso a aqui 3", $1); if($1 != null){$$ = $1}}
+	| error PTCOMA { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+			  reportes.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
+			}
 	// | REVALUAR CORIZQ expresion CORDER PTCOMA {
 	// 	console.log('El valor de la expresión es: ' + $3);
 	// }
