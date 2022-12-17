@@ -15,10 +15,19 @@ class Declaration {
         this.iden=iden
     }
 
+    clearAll() {
+        for (const key in this) {
+          if (this.hasOwnProperty(key)) {
+            delete this[key];
+          }
+        }
+      }
+    
     /**
      * La instruccion declaracion consta de la siguinete estructura
      * <Tipo de dato> <identificador> [ = <expresion> ]?;
      */
+
 
     operar(tabla_simbolos,reportes) {
         

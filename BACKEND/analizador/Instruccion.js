@@ -1,11 +1,16 @@
 global.traduccion=""
 
 class Instruccion{
-    constructor(instrucciones){
-        this.instrucciones= instrucciones
+    constructor(){
+        this.clearAll();
     
     }
 
+    clearAll() {
+      this.instrucciones
+    
+    
+    }
     getInst(){
         return this.instrucciones
     }
@@ -111,6 +116,7 @@ class Instruccion{
         }
         //console.log("estoy4")
         //console.log(global.traduccion)
+        this.clearAll()
       }
 
       generarIden(identa){

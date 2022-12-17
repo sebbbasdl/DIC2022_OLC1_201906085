@@ -2,7 +2,8 @@ const { Router, json } = require('express');
 
 
 const router = Router();
-const parser = require('../../analizador/gramatica')   
+const parser = require('../../analizador/gramatica');   
+const Instruccion = require('../../analizador/Instruccion');
 require('../../analizador/Instruccion')   
 
 
@@ -23,6 +24,8 @@ router.post("/Analizador", async (req, res) => {
     res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: resultado.getSimbolos(), traduccion: global.traduccion});
     // console.log(id_user.id_usuario_logueado)
     console.log(global.traduccion)
+    global.traduccion=""
+    
   })
   
 

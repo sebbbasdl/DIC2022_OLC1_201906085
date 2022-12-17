@@ -219,7 +219,25 @@ case 68:
 identacion.masIden();console.log("Paso por While");var auxwhile= new While($$[$0-4],"Ciclo While", $$[$0-1],identacion.getIden()); this.$= new While($$[$0-4],"Ciclo While", "while "+auxwhile.trad2()+" :\n"+auxwhile.trad()+"\n",identacion.getIden());
 break;
 case 69:
-identacion.masIden();console.log("Paso por While");var auxdowhile= new DoWhile($$[$0-2],"Ciclo Do While", $$[$0-6],identacion.getIden()); this.$= new DoWhile($$[$0-6],"Ciclo Do While", "while True :\n"+auxdowhile.trad()+"\n"+auxdowhile.generarIden(identacion.getIden())+"if "+auxdowhile.trad2()+":\n"+auxdowhile.generarIden(identacion.getIden()+1)+"break\n",identacion.getIden());
+identacion.masIden();console.log("Paso por Do While");var auxdowhile= new DoWhile($$[$0-2],"Ciclo Do While", $$[$0-6],identacion.getIden()); this.$= new DoWhile($$[$0-6],"Ciclo Do While", "while True :\n"+auxdowhile.trad()+"\n"+auxdowhile.generarIden(identacion.getIden())+"if "+auxdowhile.trad2()+":\n"+auxdowhile.generarIden(identacion.getIden()+1)+"break\n",identacion.getIden());
+break;
+case 70:
+identacion.masIden();console.log("Paso por Void");var auxvoid= new Void($$[$0-6],$$[$0-4], "Void",$$[$0-1],identacion.getIden()); this.$= new Void($$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxvoid.trad2()+" ):\n"+auxvoid.trad()+"\n",identacion.getIden());
+break;
+case 71:
+identacion.masIden();console.log("Paso por Func");var auxfunc= new Func("Int",$$[$0-6],$$[$0-4], "Funcion",$$[$0-1],identacion.getIden()); this.$= new Func("Int",$$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());
+break;
+case 72:
+identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("String",$$[$0-6],$$[$0-4], "Funcion",$$[$0-1],identacion.getIden()); this.$= new Func("String",$$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());
+break;
+case 73:
+identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Char",$$[$0-6],$$[$0-4], "Funcion",$$[$0-1],identacion.getIden()); this.$= new Func("Char",$$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());
+break;
+case 74:
+identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Bool",$$[$0-6],$$[$0-4], "Funcion",$$[$0-1],identacion.getIden()); this.$= new Func("Bool",$$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());
+break;
+case 75:
+identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Double",$$[$0-6],$$[$0-4], "Funcion",$$[$0-1],identacion.getIden()); this.$= new Func("Double",$$[$0-6],$$[$0-4],"Void", "def "+$$[$0-6]+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());
 break;
 case 76:
 this.$ = Type.ENTERO
@@ -502,6 +520,8 @@ _handle_error:
 	const For = require('./For.js')
 	const While= require('./While.js')
 	const DoWhile= require('./DoWhile.js')
+	const Void= require('./Void.js')
+	const Func= require('./Funciones.js')
 	var cont=0;
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
@@ -866,70 +886,76 @@ case 11:return 57;
 break;
 case 12:return 58
 break;
-case 13:return 22;
+case 13:return 'T_BREAK'
 break;
-case 14:return 48;
+case 14:return 'T_RETURN'
 break;
-case 15:return 8;
+case 15:return 'T_CONTINUE'
 break;
-case 16:return 24;
+case 16:return 22;
 break;
-case 17:return 26;
+case 17:return 48;
 break;
-case 18:return 'CORIZQ';
+case 18:return 8;
 break;
-case 19:return 'CORDER';
+case 19:return 24;
 break;
-case 20:return 53;
+case 20:return 26;
 break;
-case 21:return 54;					
+case 21:return 'CORIZQ';
 break;
-case 22:return 18;
+case 22:return 'CORDER';
 break;
-case 23:return 37;
+case 23:return 53;
 break;
-case 24:return 38;
+case 24:return 54;					
 break;
-case 25:return 39;
+case 25:return 18;
 break;
-case 26:return 28;
+case 26:return 37;
 break;
-case 27:return 50;
+case 27:return 38;
 break;
-case 28:return 49;
+case 28:return 39;
 break;
-case 29:return 51;
+case 29:return 28;
 break;
-case 30:return 45;
+case 30:return 50;
 break;
-case 31:return 43;
+case 31:return 49;
 break;
-case 32:return 30
+case 32:return 51;
 break;
-case 33:return 31
+case 33:return 45;
 break;
-case 34:
+case 34:return 43;
 break;
-case 35:
+case 35:return 30
 break;
-case 36: yy_.yytext=yy_.yytext.substr(1,yy_.yyleng-2); return 20; 
+case 36:return 31
 break;
-case 37:return 40;
+case 37:
 break;
-case 38:return 36;
+case 38:
 break;
-case 39:return 19;
+case 39: yy_.yytext=yy_.yytext.substr(1,yy_.yyleng-2); return 20; 
 break;
-case 40:return 34;
+case 40:return 40;
 break;
-case 41:return 5;
+case 41:return 36;
 break;
-case 42: console.error('Este es un error léxico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
+case 42:return 19;
+break;
+case 43:return 34;
+break;
+case 44:return 5;
+break;
+case 45: console.error('Este es un error léxico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
 break;
 }
 },
-rules: [/^(?:Evaluar\b)/i,/^(?:Console\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:Write\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:char\b)/i,/^(?:bool\b)/i,/^(?:string\b)/i,/^(?:if\b)/i,/^(?:do\b)/i,/^(?:void\b)/i,/^(?:\.)/i,/^(?:,)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:!)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+\b)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:[A-Za-z]+["_"0-9A-Za-z]*)/i,/^(?:('[^\']')|('''')|(#{ENTERO}))/i,/^(?:$)/i,/^(?:.)/i],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42],"inclusive":true}}
+rules: [/^(?:Evaluar\b)/i,/^(?:Console\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:Write\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:char\b)/i,/^(?:bool\b)/i,/^(?:string\b)/i,/^(?:if\b)/i,/^(?:do\b)/i,/^(?:void\b)/i,/^(?:break\b)/i,/^(?:return\b)/i,/^(?:continue\b)/i,/^(?:\.)/i,/^(?:,)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:!)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+\b)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:[A-Za-z]+["_"0-9A-Za-z]*)/i,/^(?:('[^\']')|('''')|(#{ENTERO}))/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],"inclusive":true}}
 });
 return lexer;
 })();

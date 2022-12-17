@@ -21,6 +21,9 @@
 "if"				return 'T_IF';
 "do"				return 'T_DO';
 "void"				return 'T_VOID'
+"break"				return 'T_BREAK'
+"return"			return 'T_RETURN'
+"continue"			return 'T_CONTINUE'
 "."					return 'T_PUNTO';
 ","					return 'T_COMA';
 ";"                 return 'PTCOMA';
@@ -77,6 +80,8 @@
 	const For = require('./For.js')
 	const While= require('./While.js')
 	const DoWhile= require('./DoWhile.js')
+	const Void= require('./Void.js')
+	const Func= require('./Funciones.js')
 	var cont=0;
 	var reportes = new Reportes();
 	var tabla_simbolo = new SymbolTable(null);
@@ -243,19 +248,19 @@ while
 ;
 
 do_while
-	:  T_DO LLAVEA instrucciones LLAVEC  T_WHILE PARIZQ logicos PARDER PTCOMA {identacion.masIden();console.log("Paso por While");var auxdowhile= new DoWhile($7,"Ciclo Do While", $3,identacion.getIden()); $$= new DoWhile($3,"Ciclo Do While", "while True :\n"+auxdowhile.trad()+"\n"+auxdowhile.generarIden(identacion.getIden())+"if "+auxdowhile.trad2()+":\n"+auxdowhile.generarIden(identacion.getIden()+1)+"break\n",identacion.getIden());}
+	:  T_DO LLAVEA instrucciones LLAVEC  T_WHILE PARIZQ logicos PARDER PTCOMA {identacion.masIden();console.log("Paso por Do While");var auxdowhile= new DoWhile($7,"Ciclo Do While", $3,identacion.getIden()); $$= new DoWhile($3,"Ciclo Do While", "while True :\n"+auxdowhile.trad()+"\n"+auxdowhile.generarIden(identacion.getIden())+"if "+auxdowhile.trad2()+":\n"+auxdowhile.generarIden(identacion.getIden()+1)+"break\n",identacion.getIden());}
 ;
 
 void 
-	: T_VOID IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	: T_VOID IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Void");var auxvoid= new Void($2,$4, "Void",$7,identacion.getIden()); $$= new Void($2,$4,"Void", "def "+$2+"("+auxvoid.trad2()+" ):\n"+auxvoid.trad()+"\n",identacion.getIden());}
 ;
 
 funciones
-	: T_INT IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
-	| T_STRING IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
-	| T_CHAR IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
-	| T_BOOL IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
-	| T_DOUBLE IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC
+	: T_INT IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Func");var auxfunc= new Func("Int",$2,$4, "Funcion",$7,identacion.getIden()); $$= new Func("Int",$2,$4,"Void", "def "+$2+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());}
+	| T_STRING IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("String",$2,$4, "Funcion",$7,identacion.getIden()); $$= new Func("String",$2,$4,"Void", "def "+$2+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());}
+	| T_CHAR IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Char",$2,$4, "Funcion",$7,identacion.getIden()); $$= new Func("Char",$2,$4,"Void", "def "+$2+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());}
+	| T_BOOL IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Bool",$2,$4, "Funcion",$7,identacion.getIden()); $$= new Func("Bool",$2,$4,"Void", "def "+$2+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());}
+	| T_DOUBLE IDENTIFICADOR PARIZQ parametros PARDER LLAVEA instrucciones LLAVEC {identacion.masIden();console.log("Paso por Void");var auxfunc= new Func("Double",$2,$4, "Funcion",$7,identacion.getIden()); $$= new Func("Double",$2,$4,"Void", "def "+$2+"("+auxfunc.trad2()+" ):\n"+auxfunc.trad()+"\n",identacion.getIden());}
 ;
 
 type
@@ -266,3 +271,5 @@ type
 	 | T_CHAR {$$ = Type.CHAR}
      
 ;
+
+
