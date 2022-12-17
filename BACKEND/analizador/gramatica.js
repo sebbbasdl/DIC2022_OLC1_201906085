@@ -150,13 +150,16 @@ case 21:
  console.log("Paso a aqui PRINT", $$[$0-6]); var auxprint= new Print($$[$0-2],this._$.first_line,this._$.first_column,"IDEN","imprimir",$$[$0-1],identacion.getIden()/*+1*/);this.$ = new Print($$[$0-2],this._$.first_line,this._$.first_column,"IDEN","imprimir",identacion.generarIden()+"print(" +$$[$0-2]+auxprint.trad2()+")\n",identacion.getIden()/*+1*/);
 break;
 case 22:
-console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2]+"="+$$[$0],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0-2]+"="+$$[$0]
+console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2],$$[$0-3],Type.VARIABLE,Type.VARIABLE, $$[$0] ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0-2]+"="+$$[$0]
 break;
-case 23: case 24: case 26: case 27:
- console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2]+"="+$$[$0],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]+"\n");trad+= $$[$0-2]+"="+$$[$0]
+case 23: case 24: case 26:
+ console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0-2]+"="+$$[$0]
 break;
 case 25:
- console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2]+"="+$$[$0],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"=\""+$$[$0]+"\"\n");trad+= $$[$0-2]+"="+$$[$0]
+ console.log("Paso a aqui DECLA", $$[$0-3]);  this.$ = new Declaracion($$[$0-2],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"=\""+$$[$0]+"\"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0-2]+"="+$$[$0]
+break;
+case 27:
+ console.log("Paso a aqui DECLA", $$[$0-3]); this.$ = new Declaracion($$[$0-2],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0-2]+"="+$$[$0]+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0-2]+"="+$$[$0]
 break;
 case 28:
 console.log("Paso a aqui DECLA", $$[$0-1]);  this.$ = new Declaracion($$[$0],$$[$0-1],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION100' ,this._$.first_line,this._$.first_column,"declaracion",$$[$0],identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $$[$0]

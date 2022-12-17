@@ -169,12 +169,12 @@ imprimir
 
 
 declaracion
-     : T_INT IDENTIFICADOR T_IGUAL expresion {console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
-	 | T_BOOL IDENTIFICADOR T_IGUAL  T_TRUE{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
-	 | T_BOOL IDENTIFICADOR T_IGUAL  T_FALSE{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
-	 | T_STRING IDENTIFICADOR T_IGUAL  CADENA{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"=\""+$4+"\"\n");trad+= $2+"="+$4}
-	 | T_CHAR IDENTIFICADOR T_IGUAL  CHAR{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
-	 | T_DOUBLE IDENTIFICADOR T_IGUAL  DECIMAL{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2+"="+$4,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n");trad+= $2+"="+$4}
+     : T_INT IDENTIFICADOR T_IGUAL expresion {console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, $4 ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
+	 | T_BOOL IDENTIFICADOR T_IGUAL  T_TRUE{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
+	 | T_BOOL IDENTIFICADOR T_IGUAL  T_FALSE{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
+	 | T_STRING IDENTIFICADOR T_IGUAL  CADENA{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"=\""+$4+"\"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
+	 | T_CHAR IDENTIFICADOR T_IGUAL  CHAR{ console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
+	 | T_DOUBLE IDENTIFICADOR T_IGUAL  DECIMAL{ console.log("Paso a aqui DECLA", $1); $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column,"declaracion",$2+"="+$4+"\n",identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2+"="+$4}
 	 | T_INT IDENTIFICADOR  {console.log("Paso a aqui DECLA", $1);  $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION100' ,this._$.first_line,this._$.first_column,"declaracion",$2,identacion.generarIden()+identacion.getIden()/*+1*/);trad+= $2}
 ;
 
